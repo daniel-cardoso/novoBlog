@@ -35,13 +35,16 @@ export class PostTemaComponent implements OnInit {
     });
   }
   cadastrar(){
-    if (this.tema.descricao == null) {
+    this.tema.descricao = this.tema.descricao.trim()
+    if (this.tema.descricao == null ||
+      this.tema.descricao.length === 0) {
      alert('Preencha o campo de nome do tema corretamente')
     } else {
      this.temaService.postTema(this.tema).subscribe((resp: Tema) => {
        this.tema = resp
-       this.router.navigate(['/feed'])
        alert('Tema cadastrado com sucesso!')
+       this.findAllTemas()
+       this.tema.descricao = ""
      })
     }
   }
